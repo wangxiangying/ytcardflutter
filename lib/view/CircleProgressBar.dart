@@ -53,20 +53,6 @@ class CircleProgressBarPainter extends CustomPainter {
     canvas.drawPath(getArcPath(centerX, centerY, radius, false, (progressBar.progress / progressBar.max) * 360), paint);
   }
 
-  ///
-  /// 获取Arc的Path
-  /// <pre>
-  /// centerX 圆心坐标x
-  /// centerY 圆心坐标Y
-  /// isClosePath 是否闭合路径
-  /// arcAngle 角度，默认为360°
-  ///
-  /// 说明：下面代码中使用了一个数学公式
-  /// 已知圆心坐标(x, y)，半径(r)，和角度(a)，求圆上某个点的坐标，则有：
-  /// x1 = x + r * cos(a * π / 180.0)
-  /// y1 = y + r * sin(a * π / 180.0)
-  /// </pre>
-  ///
   Path getArcPath(
       double centerX, double centerY, double radius, bool isClosePath, [double arcAngle = 360.0]) {
     var path = Path();
