@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:ytcardapp/model/notifier/BillNotifier.dart';
 import 'package:ytcardapp/page/fristPage.dart';
- import 'package:ytcardapp/theme.dart';
- import 'package:ytcardapp/utils/bottom-nav-item.dart';
+import 'package:ytcardapp/theme.dart';
+import 'package:ytcardapp/utils/bottom-nav-item.dart';
+import 'package:ytcardapp/view/Dialog.dart';
 
+import 'model/Carousel.dart';
+import 'model/notifier/NetNotifier.dart';
 import 'page/activity.dart';
 import 'page/search.dart';
 import 'page/user-center.dart';
-
-
 
 class IndexPage extends StatefulWidget {
   @override
@@ -17,18 +20,20 @@ class IndexPage extends StatefulWidget {
 }
 
 class IndexPageState extends State<IndexPage> {
-
-  var appBarTitles = ['首页', '活动', '收益', '我的'];
-
   List<BottomNavItem> tabImages;
-
   List _pageList;
-
   var _tabIndex = 0;
 
   void handleTabChange(index) {
     _tabIndex = index;
-    this.setState((){});
+    this.setState(() {
+//
+//      var netData = Provider.of<NetNotify>(context);
+//
+//      if (netData?.netData?.code == 401) {
+//        _shox(1);
+//      }
+    });
   }
 
   void initData() {
@@ -38,22 +43,22 @@ class IndexPageState extends State<IndexPage> {
           selectedIcon: 'assets/home-fill.png',
           title: '首页'),
       new BottomNavItem(
-          icon: 'assets/bulb.png',
-          selectedIcon: 'assets/bulb-fill.png',
-          title: '活动'),
-      new BottomNavItem(
           icon: 'assets/line-chart.png',
           selectedIcon: 'assets/area-chart-fill.png',
-          title: '收益'),
+          title: '交易记录'),
+//      new BottomNavItem(
+//          icon: 'assets/line-chart.png',
+//          selectedIcon: 'assets/area-chart-fill.png',
+//          title: '收益'),
       new BottomNavItem(
-          icon: 'assets/user.png',
-          selectedIcon: 'assets/user.png',
+          icon: 'assets/bulb.png',
+          selectedIcon: 'assets/bulb-fill.png',
           title: '我的'),
     ];
     _pageList = [
       new HomeRoutePage(),
       new ActivityPage(),
-      new SearchPage(),
+//      new SearchPage(),
       new UserCenterPage()
     ];
   }
@@ -61,16 +66,19 @@ class IndexPageState extends State<IndexPage> {
   @override
   Widget build(BuildContext context) {
     initData();
-    return new Scaffold(
+
+    return Scaffold(
       body: _pageList[_tabIndex],
       bottomNavigationBar: BottomNavigationBar(
         onTap: handleTabChange,
         type: BottomNavigationBarType.fixed,
         items: tabImages.map((item) {
           return BottomNavigationBarItem(
-            title: new Text(item.title, style: TextStyle(color: Style.mainTextColor)),
-            icon: Image.asset(tabImages.indexOf(item) != _tabIndex ? item.icon : item.selectedIcon)
-          );
+              title: new Text(item.title,
+                  style: TextStyle(color: Style.mainTextColor)),
+              icon: Image.asset(tabImages.indexOf(item) != _tabIndex
+                  ? item.icon
+                  : item.selectedIcon));
         }).toList(),
       ),
     );

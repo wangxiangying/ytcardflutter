@@ -30,7 +30,8 @@ dependencies:
   dio: 3.0.8
   json_annotation: 3.0.1
   flutter_swiper: 1.1.6
-
+  flutter_easyrefresh: ^2.1.1
+  bot_toast: ^2.0.0+2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -69,6 +70,10 @@ flutter:
     - assets/saoma.png
     - assets/erweima.png
     - assets/jiantou.png
+    - assets/ic_refund_selected.png
+    - assets/ic_refund_unselected.png
+    - assets/hongdian.png
+    - assets/landian.png
 
 
 

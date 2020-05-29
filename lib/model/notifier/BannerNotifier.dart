@@ -16,7 +16,4 @@ class BannerNotifier extends ChangeNotifier {
     return this;
   }
 
-  fetchSomething() async {
-      await IndexService.getCarousel();
-  }
 }

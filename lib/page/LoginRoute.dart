@@ -3,7 +3,9 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:ytcardapp/model/LoginModel.dart';
 import 'package:ytcardapp/model/notifier/LoginNotifier.dart';
+import 'package:ytcardapp/model/notifier/NetNotifier.dart';
 import 'package:ytcardapp/service/service.dart';
+import 'package:ytcardapp/view/Dialog.dart';
 
 import '../index.dart';
 
@@ -31,6 +33,8 @@ class _LoginRouteState extends State<LoginRoute> {
 
   @override
   Widget build(BuildContext context) {
+    MyDialog.ctx = context; // 注入context
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -127,9 +131,8 @@ class _LoginRouteState extends State<LoginRoute> {
       }
 
       if (user != null) {
-
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => new IndexPage()));
+            .push(MaterialPageRoute(builder: (context) =>   new IndexPage()));
       }
     }
   }

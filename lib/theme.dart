@@ -2,9 +2,9 @@ import 'dart:ui';
 
 class Style {
 
-  static Color mainColor = Color(0xFFD92B4B);
+  static Color mainColor = Color(0xffffffff);
 
-  static Color mainLightColor = Color(0xFFF25c5c);
+  static Color mainLightColor = Color(0xffffffff);
 
   static Color mainTextColor = Color(0xFF9fa7b8);
 

@@ -34,14 +34,49 @@ class NetUtil {
       url += paramStr;
     }
     dio.options.headers["Authorization"] = "Bearer " + await SPs.getToken();
-    var response = await dio.get(url);
+    var response;
+    try {
+      response = await dio.get(url);
+    } on DioError catch (e) {
+      print('get error---------$e');
+      formatError(e);
+    }
+
     return Future.value(response.data);
   }
 
   //post请求
   static Future<Map<String, dynamic>> post(
       String url, Map<String, String> params) async {
-    var response = await dio.post(url, data: params);
+    var response;
+    try {
+      response = await dio.post(url, data: params);
+    } on DioError catch (e) {
+      print('post error---------$e');
+      formatError(e);
+    }
     return Future.value(response.data);
+  }
+
+  static void formatError(DioError e) {
+    if (e.type == DioErrorType.CONNECT_TIMEOUT) {
+      // It occurs when url is opened timeout.
+      print("连接超时");
+    } else if (e.type == DioErrorType.SEND_TIMEOUT) {
+      // It occurs when url is sent timeout.
+      print("请求超时");
+    } else if (e.type == DioErrorType.RECEIVE_TIMEOUT) {
+      //It occurs when receiving timeout
+      print("响应超时");
+    } else if (e.type == DioErrorType.RESPONSE) {
+      // When the server response, but with a incorrect status, such as 404, 503...
+      print("出现异常");
+    } else if (e.type == DioErrorType.CANCEL) {
+      // When the request is cancelled, dio will throw a error with this type.
+      print("请求取消");
+    } else {
+      //DEFAULT Default error type, Some other Error. In this case, you can read the DioError.error if it is not null.
+      print("未知错误");
+    }
   }
 }

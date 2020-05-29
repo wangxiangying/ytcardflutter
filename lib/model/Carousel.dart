@@ -1,7 +1,11 @@
-abstract class NetData<T extends ParseJson>   {
+import 'package:ytcardapp/model/notifier/NetNotifier.dart';
+
+abstract class NetData<T extends ParseJson> {
   int code;
   String message;
   T data;
+
+  get result => data;
 
   NetData(this.data);
 
@@ -11,6 +15,7 @@ abstract class NetData<T extends ParseJson>   {
     if (json['data'] != null) {
       parse(json['data']);
     }
+    NetNotify().setNetData(code, message);
   }
 
   T parse(Map<String, dynamic> json) {
@@ -19,26 +24,5 @@ abstract class NetData<T extends ParseJson>   {
 }
 
 abstract class ParseJson {
-  ParseJson jsonParse(Map<String, dynamic> data)  ;
+  ParseJson jsonParse(Map<String, dynamic> data);
 }
-
-abstract class ListNetData<T extends ParseJson>  {
-  int code;
-  String message;
-  List<T> data;
-  ListNetData(this.data);
-  fromJson(Map<String, dynamic> json) {
-    code = json['code'];
-    message = json['message'];
-    if (json['data'] != null) {
-      Iterable<dynamic> items = json['data'];
-      items.forEach((e) {
-        T it=( e as T).jsonParse(e);
-        print(it.toString());
-        data.add(it);
-      });
-     }
-  }
-}
-
-

@@ -17,7 +17,7 @@ class HomeIndexPage extends StatefulWidget {
 
 class HomeIndexPageState extends State<HomeIndexPage> {
   void initData() async {
-    await IndexService.getCarousel();
+
   }
 
 //

@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ytcardapp/theme.dart';
 
 class CircleProgressBar {
   CircleProgressBar(this.progress, {this.min = 0.0, this.max = 100.0});
@@ -40,13 +41,13 @@ class CircleProgressBarPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final progressBar = animation.value;
     final paint = new Paint()
-      ..color = Colors.grey[400]
+      ..color = Style.appColor
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 8.0;
+      ..strokeWidth = 20.0;
     final double wh = max(size.width, size.height);
-    final centerX = (size.width - wh) / 2.0,
-        centerY = (size.height - wh) / 2.0;
-    final radius = wh / 2.0;
+    final centerX = (size.width  ) / 2.0,
+        centerY = (size.height ) / 2.0;
+    final radius = wh /2.0;
     canvas.drawPath(getArcPath(centerX, centerY, radius, true), paint);
     paint.color = Colors.red;
     canvas.drawPath(getArcPath(centerX, centerY, radius, false, (progressBar.progress / progressBar.max) * 360), paint);

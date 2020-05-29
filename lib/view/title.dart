@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import '../theme.dart';
@@ -6,7 +8,10 @@ import '../utils/adapt.dart';
 // ignore: must_be_immutable
 class TitleCommand extends StatelessWidget {
   String title;
-  TitleCommand({this.title, Key key}) : super(key: key);
+  String rightButton;
+
+  TitleCommand({this.title, this.rightButton, Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return new Container(
@@ -18,9 +23,26 @@ class TitleCommand extends StatelessWidget {
         height: Adapt.padTopH() + Adapt.px(50),
         child: new Column(children: <Widget>[
           new Padding(padding: new EdgeInsets.only(top: Adapt.padTopH())),
-          new Center(
-              child: new Text(title,
-                  style: TextStyle(fontSize: 18, color: Color(0xFFFFFFFF))))
+          Stack(
+            children: <Widget>[
+              Container(
+                alignment: Alignment.center,
+                child: new Text(title,
+                    style:
+                        TextStyle(fontSize: 18, color: Color(0xff000000))),
+              ),
+
+              Container(
+                alignment:  Alignment.centerRight,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0,6,12,0),
+                  child: new Text(rightButton??"",
+                      style:
+                      TextStyle(fontSize: 15, color:Style.appColor)),
+                ),
+              ),
+            ],
+          )
         ], mainAxisAlignment: MainAxisAlignment.center));
   }
 }
