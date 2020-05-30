@@ -6,8 +6,8 @@ import 'package:ytcardapp/model/notifier/BillNotifier.dart';
 import 'package:ytcardapp/model/notifier/NetNotifier.dart';
 import 'package:ytcardapp/service/service.dart';
 import 'package:ytcardapp/utils/common.dart';
-import 'package:ytcardapp/view/Dialog.dart';
 
+import 'model/notifier/BillListNotifier.dart';
 import 'page/LoginRoute.dart';
 
 void main() {
@@ -27,6 +27,10 @@ void main() {
             initialData: BillNotifier(),
             create: (context) => IndexService.bill(),
           ),
+
+          ChangeNotifierProvider.value(
+              value: BillListNotifier()
+          )
         ], child: MyApp()),
       ));
 }
@@ -36,7 +40,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       navigatorKey: Global.navigatorState,
 
@@ -45,7 +48,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      navigatorObservers: [BotToastNavigatorObserver()], //2.注册路由观察者
+      navigatorObservers: [BotToastNavigatorObserver()],
+      //2.注册路由观察者
       home: LoginRoute(),
     );
 

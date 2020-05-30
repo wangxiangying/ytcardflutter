@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ytcardapp/model/Bill.dart';
+import 'package:ytcardapp/model/notifier/BillListNotifier.dart';
 import 'package:ytcardapp/model/notifier/BillNotifier.dart';
+import 'package:ytcardapp/service/service.dart';
 import 'package:ytcardapp/view/title.dart';
 
 import '../theme.dart';
@@ -13,12 +16,28 @@ class ActivityPage extends StatefulWidget {
 }
 
 class ActivityPageState extends State<ActivityPage> {
-  final items = new List<String>.generate(10000, (i) => "Item $i");
+  final items = new List<String>.generate(1000, (i) => "Item $i");
+  String startTime;
+  String endTime;
+  int pageNo;
+  int pageSize;
+  BillListNotifier billListNotifier;
+  var list;
+
+  @override
+  void initState() {
+    search();
+  }
+
+  void search() async {
+    billListNotifier =
+        await IndexService.getBillList(startTime, endTime, pageNo, pageSize);
+    list = billListNotifier.data as List<TransactionList>;
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
-    final billNotifier = Provider.of<BillNotifier>(context);
-
     return new Column(
       children: <Widget>[
         new TitleCommand(
@@ -71,7 +90,6 @@ class ActivityPageState extends State<ActivityPage> {
               gradient: new LinearGradient(
                   colors: [Style.mainColor, Style.mainLightColor])),
           child: Row(
-
             children: <Widget>[
               Expanded(
                 flex: 1,
@@ -88,7 +106,12 @@ class ActivityPageState extends State<ActivityPage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(6.0),
-                      child: Text("${billNotifier?.data?.bill?.orderCount}"),
+                      child: Consumer<BillNotifier>(
+                        builder: (context, billNotifier, child) {
+                          return Text(
+                              "${billNotifier?.data?.bill?.orderCount}");
+                        },
+                      ),
                     )
                   ],
                 ),
@@ -108,7 +131,12 @@ class ActivityPageState extends State<ActivityPage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(6.0),
-                      child: Text("${billNotifier?.data?.bill?.refundCount}"),
+                      child: Consumer<BillNotifier>(
+                        builder: (context, billNotifier, child) {
+                          return Text(
+                              "${billNotifier?.data?.bill?.refundCount}");
+                        },
+                      ),
                     )
                   ],
                 ),
@@ -116,7 +144,6 @@ class ActivityPageState extends State<ActivityPage> {
             ],
           ),
         ),
-
         Expanded(
           flex: 1,
           child: ListView.builder(

@@ -1,7 +1,9 @@
+import 'package:ytcardapp/model/Bill.dart';
 import 'package:ytcardapp/model/BillModel.dart';
 import 'package:ytcardapp/model/LoginModel.dart';
 import 'package:ytcardapp/model/MyBanner.dart';
 import 'package:ytcardapp/model/notifier/BannerNotifier.dart';
+import 'package:ytcardapp/model/notifier/BillListNotifier.dart';
 import 'package:ytcardapp/model/notifier/BillNotifier.dart';
 import 'package:ytcardapp/model/notifier/LoginNotifier.dart';
 import 'package:ytcardapp/utils/net-utils.dart';
@@ -47,6 +49,29 @@ class IndexService {
         : null;
 
     var notify = BannerNotifier().SetBannerModel(myBanners);
+    return Future.value(notify);
+  }
+
+  static Future<BillListNotifier> getBillList(
+      String startTime, String endTime, int pageNo, int pageSize) async {
+    Map<String, dynamic> params = new Map();
+    if (startTime != null) {
+      params["startTime"] = startTime;
+    }
+    if (endTime != null) {
+      params["endTime"] = endTime;
+    }
+    if (pageNo != null) {
+      params["pageNo"] = pageNo;
+    }
+    if (pageSize != null) {
+      params["pageSize"] = pageSize;
+    }
+    Map<String, dynamic> response =
+        await NetUtil.get('pay/transaction/query', params);
+    BillListModel model = BillListModel(BillResult());
+    model.fromJson(response);
+    var notify = BillListNotifier().setData(model) as BillListNotifier;
     return Future.value(notify);
   }
 }
