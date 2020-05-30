@@ -95,8 +95,8 @@ class TransactionList {
   int isRefund;
   bool negative;
   PayUser payUser;
-  Null refundReason;
-  Null refundTime;
+  String refundReason;
+  int refundTime;
   String remark;
   double tranAmt;
   String tranNo;

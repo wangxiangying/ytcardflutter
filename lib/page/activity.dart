@@ -17,22 +17,23 @@ class ActivityPage extends StatefulWidget {
 
 class ActivityPageState extends State<ActivityPage> {
   final items = new List<String>.generate(1000, (i) => "Item $i");
-  String startTime;
-  String endTime;
-  int pageNo;
-  int pageSize;
+  String startTime = "2010-11-12 00:00:00";
+  String endTime = "2020-11-22 00:00:00";
+  int pageNo = 1;
+  int pageSize = 10;
   BillListNotifier billListNotifier;
-  var list;
+  var list = List<TransactionList>();
 
   @override
   void initState() {
+    super.initState();
     search();
   }
 
   void search() async {
     billListNotifier =
         await IndexService.getBillList(startTime, endTime, pageNo, pageSize);
-    list = billListNotifier.data as List<TransactionList>;
+    list = (billListNotifier.data as BillListModel).data.transactionList;
     setState(() {});
   }
 
@@ -147,10 +148,10 @@ class ActivityPageState extends State<ActivityPage> {
         Expanded(
           flex: 1,
           child: ListView.builder(
-            itemCount: items.length,
+            itemCount: list.length,
             itemBuilder: (context, index) {
               return new ListTile(
-                title: new Text('${items[index]}'),
+                title: new Text('${list[index].cardNo}'),
               );
             },
           ),

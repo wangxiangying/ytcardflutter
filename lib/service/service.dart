@@ -54,7 +54,7 @@ class IndexService {
 
   static Future<BillListNotifier> getBillList(
       String startTime, String endTime, int pageNo, int pageSize) async {
-    Map<String, dynamic> params = new Map();
+    Map<String, String> params = new Map();
     if (startTime != null) {
       params["startTime"] = startTime;
     }
@@ -62,10 +62,10 @@ class IndexService {
       params["endTime"] = endTime;
     }
     if (pageNo != null) {
-      params["pageNo"] = pageNo;
+      params["pageNo"] = pageNo.toString();
     }
     if (pageSize != null) {
-      params["pageSize"] = pageSize;
+      params["pageSize"] = pageSize.toString();
     }
     Map<String, dynamic> response =
         await NetUtil.get('pay/transaction/query', params);
