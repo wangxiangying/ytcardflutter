@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
 import 'package:ytcardapp/model/LoginModel.dart';
-import 'package:ytcardapp/model/notifier/LoginNotifier.dart';
-import 'package:ytcardapp/model/notifier/NetNotifier.dart';
 import 'package:ytcardapp/service/service.dart';
 import 'package:ytcardapp/view/Dialog.dart';
 

@@ -74,7 +74,7 @@ class NetUtil {
     } else if (e.type == DioErrorType.CANCEL) {
       // When the request is cancelled, dio will throw a error with this type.
       print("请求取消");
-    } else {
+    }   else {
       //DEFAULT Default error type, Some other Error. In this case, you can read the DioError.error if it is not null.
       print("未知错误");
     }

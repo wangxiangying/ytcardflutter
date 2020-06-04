@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 class MyDialog {
   static dynamic ctx;
 
-  void alert(text) {
+  void alert(text ,clickOk) {
     // 请求前显示弹窗
     showDialog(
         context: ctx,
         builder: (ctx) {
           {
-            // 用Scaffold返回显示的内容，能跟随主题
             return Scaffold(
               backgroundColor: Colors.transparent, // 设置透明背影
               body: Center(
@@ -28,11 +27,8 @@ class MyDialog {
                     ],
                   ),
                   child: Column(
-                    // 定义垂直布局
                     mainAxisAlignment: MainAxisAlignment.center,
-                    // 主轴居中布局，相关介绍可以搜下flutter-ui的内容
                     children: <Widget>[
-                      // CircularProgressIndicator自带loading效果，需要宽高设置可在外加一层sizedbox，设置宽高即可
                       SizedBox(
                         height: 10,
                       ),
@@ -47,8 +43,6 @@ class MyDialog {
                           style: TextStyle(color: Color(0xff6666666)),
                         ),
                       ),
-                      // 文字
-                      // 触发关闭窗口
                       Row(children: [
                         Expanded(
                           flex: 1,
@@ -57,8 +51,8 @@ class MyDialog {
                             child: RaisedButton(
                               child: Text('确定'),
                               onPressed: () {
+                                clickOk();
                                 complete();
-                                  print('close');
                               },
                             ),
                           ),
@@ -71,7 +65,7 @@ class MyDialog {
                               child: Text('取消'),
                               onPressed: () {
                                 complete();
-                                print('close');
+
                               },
                             ),
                           ),

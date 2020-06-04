@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:ytcardapp/model/notifier/BillNotifier.dart';
 import 'package:ytcardapp/page/fristPage.dart';
 import 'package:ytcardapp/theme.dart';
 import 'package:ytcardapp/utils/bottom-nav-item.dart';
-import 'package:ytcardapp/view/Dialog.dart';
-
-import 'model/Carousel.dart';
-import 'model/notifier/NetNotifier.dart';
-import 'page/activity.dart';
-import 'page/search.dart';
+import 'page/billListPage.dart';
 import 'page/user-center.dart';
 
 class IndexPage extends StatefulWidget {
@@ -57,7 +50,7 @@ class IndexPageState extends State<IndexPage> {
     ];
     _pageList = [
       new HomeRoutePage(),
-      new ActivityPage(),
+      new BillListPage(),
 //      new SearchPage(),
       new UserCenterPage()
     ];
@@ -66,7 +59,6 @@ class IndexPageState extends State<IndexPage> {
   @override
   Widget build(BuildContext context) {
     initData();
-
     return Scaffold(
       body: _pageList[_tabIndex],
       bottomNavigationBar: BottomNavigationBar(

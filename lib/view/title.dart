@@ -9,8 +9,9 @@ import '../utils/adapt.dart';
 class TitleCommand extends StatelessWidget {
   String title;
   String rightButton;
-
-  TitleCommand({this.title, this.rightButton, Key key}) : super(key: key);
+  Function function;
+  TitleCommand({this.title, this.rightButton, this.function,  Key key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,17 +29,17 @@ class TitleCommand extends StatelessWidget {
               Container(
                 alignment: Alignment.center,
                 child: new Text(title,
-                    style:
-                        TextStyle(fontSize: 18, color: Color(0xff000000))),
+                    style: TextStyle(fontSize: 18, color: Color(0xff000000))),
               ),
-
-              Container(
-                alignment:  Alignment.centerRight,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0,6,12,0),
-                  child: new Text(rightButton??"",
-                      style:
-                      TextStyle(fontSize: 15, color:Style.appColor)),
+              GestureDetector(
+                onTap: function,
+                child: Container(
+                  alignment: Alignment.centerRight,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 6, 12, 0),
+                    child: new Text(rightButton ?? "",
+                        style: TextStyle(fontSize: 15, color: Style.appColor)),
+                  ),
                 ),
               ),
             ],

@@ -11,7 +11,7 @@ class BaseChangeNotifier<T extends NetData> extends ChangeNotifier
   BaseChangeNotifier setData(T item) {
     _data = item;
     if (_data.code == 401) {
-      alert("登陆失效，请重新登录");
+      alert("登陆失效，请重新登录", {});
     }
     notifyListeners();
     return this;

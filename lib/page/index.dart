@@ -3,7 +3,6 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:provider/provider.dart';
 import 'package:ytcardapp/model/notifier/BannerNotifier.dart';
 import 'package:ytcardapp/model/product.dart';
-import 'package:ytcardapp/service/service.dart';
 import 'package:ytcardapp/utils/adapt.dart';
 
 import '../theme.dart';
@@ -16,28 +15,6 @@ class HomeIndexPage extends StatefulWidget {
 }
 
 class HomeIndexPageState extends State<HomeIndexPage> {
-  void initData() async {
-
-  }
-
-//
-//  void onProductClick(Product product) {
-//    Navigator.push(context,
-//        new MaterialPageRoute(builder: (BuildContext context) {
-//      return new ProductDetail(product);
-//    }));
-//  }
-
-//  Future<Null> _refresh() async {
-//    var model = await IndexService.getCarousel();
-//    print("length ::" + model.length.toString());
-//    return;
-//  }
-
-  void initState() {
-    initData();
-  }
-
   Widget buildSwiper() {
     return Container(
         height: Adapt.padTopH() + Adapt.px(90),
@@ -219,10 +196,7 @@ class HomeIndexPageState extends State<HomeIndexPage> {
 
   @override
   Widget build(BuildContext context) {
-
-
-     return buildSwiper();
-
+    return buildSwiper();
 
     return ListView.builder(
         padding: EdgeInsets.all(0),
