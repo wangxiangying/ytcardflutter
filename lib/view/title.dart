@@ -9,8 +9,15 @@ import '../utils/adapt.dart';
 class TitleCommand extends StatelessWidget {
   String title;
   String rightButton;
-  Function function;
-  TitleCommand({this.title, this.rightButton, this.function,  Key key})
+  Function rightFunction;
+  Function backFunction;
+
+  TitleCommand(
+      {this.title,
+      this.rightButton,
+      this.rightFunction,
+      this.backFunction,
+      Key key})
       : super(key: key);
 
   @override
@@ -32,7 +39,7 @@ class TitleCommand extends StatelessWidget {
                     style: TextStyle(fontSize: 18, color: Color(0xff000000))),
               ),
               GestureDetector(
-                onTap: function,
+                onTap: rightFunction,
                 child: Container(
                   alignment: Alignment.centerRight,
                   child: Padding(

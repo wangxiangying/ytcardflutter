@@ -43,7 +43,6 @@ class BillListPageState extends State<BillListPage> {
         }
       }
     });
-
     _search();
   }
 
@@ -101,7 +100,7 @@ class BillListPageState extends State<BillListPage> {
         new TitleCommand(
           title: '交易记录',
           rightButton: "筛选",
-          function: () => {_navigateAndDisplaySelection(context)},
+          rightFunction: () => {_navigateAndDisplaySelection(context)},
         ),
         Container(
           decoration: new BoxDecoration(
