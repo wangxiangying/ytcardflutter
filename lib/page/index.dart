@@ -198,18 +198,18 @@ class HomeIndexPageState extends State<HomeIndexPage> {
   Widget build(BuildContext context) {
     return buildSwiper();
 
-    return ListView.builder(
-        padding: EdgeInsets.all(0),
-        itemCount: 4,
-        itemBuilder: (BuildContext buildContext, int index) {
-          if (index == 0) {
-            return buildSwiper();
-          } else if (index == 1) {
-            return buildRecommond();
-          } else if (index == 2) {
-            return buildBanner();
-          } else {
-            return buildBanner();
+    // return ListView.builder(
+    //     padding: EdgeInsets.all(0),
+    //     itemCount: 4,
+    //     itemBuilder: (BuildContext buildContext, int index) {
+    //       if (index == 0) {
+    //         return buildSwiper();
+    //       } else if (index == 1) {
+    //         return buildRecommond();
+    //       } else if (index == 2) {
+    //         return buildBanner();
+    //       } else {
+    //         return buildBanner();
 
 //
 //            return Provide<Store>(builder: (context, child, store) {
@@ -229,7 +229,7 @@ class HomeIndexPageState extends State<HomeIndexPage> {
 //                return new Column(children: w);
 //              }
 //            });
-          }
-        });
+        //   }
+        // });
   }
 }

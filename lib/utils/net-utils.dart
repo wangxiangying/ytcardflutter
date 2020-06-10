@@ -10,7 +10,7 @@ class NetUtil {
 
   static var imei;
   static var dio = new Dio(
-      new BaseOptions(baseUrl: "https://api.ytpay.com.cn/1.0/", headers: {
+      new BaseOptions(baseUrl: "https://dapi.ytpay.com.cn/1.0/", headers: {
     "Content-Type": "application/json;charset=utf-8",
     "Accept": "application/json;charset=utf-8"
   }));

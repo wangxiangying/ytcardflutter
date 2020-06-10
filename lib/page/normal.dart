@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class HomeNormalPage extends StatefulWidget {
   String title;
   HomeNormalPage(this.title, {Key key}): super(key: key) { }

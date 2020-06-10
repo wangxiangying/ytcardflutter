@@ -8,6 +8,7 @@ import 'package:ytcardapp/service/service.dart';
 import 'package:ytcardapp/utils/common.dart';
 
 import 'model/notifier/BillListNotifier.dart';
+import 'model/notifier/NavIndexNotifier.dart';
 import 'page/LoginRoute.dart';
 
 void main() {
@@ -16,7 +17,7 @@ void main() {
         MultiProvider(providers: [
           FutureProvider(
             initialData: BannerNotifier(),
-            create: (context) => IndexService.getCarousel(),
+            create: (context) => NetService.getCarousel(),
           ),
           ChangeNotifierProvider(
             create: (BuildContext context) {
@@ -25,12 +26,10 @@ void main() {
           ),
           FutureProvider(
             initialData: BillNotifier(),
-            create: (context) => IndexService.bill(),
+            create: (context) => NetService.bill(),
           ),
-
-          ChangeNotifierProvider.value(
-              value: BillListNotifier()
-          )
+          ChangeNotifierProvider.value(value: NavIndexNotifier()),
+          ChangeNotifierProvider.value(value: BillListNotifier())
         ], child: MyApp()),
       ));
 }
@@ -52,19 +51,5 @@ class MyApp extends StatelessWidget {
       //2.注册路由观察者
       home: LoginRoute(),
     );
-
-    FutureProvider(
-        initialData: BillNotifier(),
-        create: (context) => IndexService.bill(),
-        child: MaterialApp(
-          title: '世通卡商管端',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-          ),
-          navigatorObservers: [BotToastNavigatorObserver()], //2.注册路由观察者
-          home: LoginRoute(),
-        ));
-//
   }
 }

@@ -7,20 +7,21 @@ class SPs {
 
 //保存数据
   static void saveStringCache(String name, String value) async {
-    SharedPreferences prefs = await _prefs   ;
+    SharedPreferences prefs = await _prefs;
     prefs.setString(name, value);
     prefs.commit();
   }
 
 //获取数据
   static Future<String> fromCache(String name) async {
-    SharedPreferences prefs = await _prefs ;
+    SharedPreferences prefs = await _prefs;
     String strValue = prefs.getString(name);
     return strValue;
   }
 
   static const _token = "token";
-   static String TOKEN;
+
+  static String TOKEN;
 
   static void saveToken(String token) {
     TOKEN = token;

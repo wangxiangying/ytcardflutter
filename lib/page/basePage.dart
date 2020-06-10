@@ -1,21 +1,6 @@
-import 'package:flutter/cupertino.dart';
-
-abstract class BasePage extends StatefulWidget {
-  var tag = "basePage";
-  EventCallback eventCallback;
-  BasePage(this.tag) {
-    eventCallback = callback();
-    bus.on(tag, eventCallback);
-  }
-
-  EventCallback callback();
-  String getTag();
-
-}
 
 //订阅者回调签名
 typedef void EventCallback(arg);
-
 class EventBus {
   //私有构造函数
   EventBus._internal();

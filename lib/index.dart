@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:ytcardapp/page/fristPage.dart';
 import 'package:ytcardapp/theme.dart';
 import 'package:ytcardapp/utils/bottom-nav-item.dart';
+
+import 'model/notifier/NavIndexNotifier.dart';
 import 'page/billListPage.dart';
 import 'page/user-center.dart';
 
@@ -18,14 +21,8 @@ class IndexPageState extends State<IndexPage> {
   var _tabIndex = 0;
 
   void handleTabChange(index) {
-    _tabIndex = index;
     this.setState(() {
-//
-//      var netData = Provider.of<NetNotify>(context);
-//
-//      if (netData?.netData?.code == 401) {
-//        _shox(1);
-//      }
+      _tabIndex = index;
     });
   }
 
@@ -58,20 +55,31 @@ class IndexPageState extends State<IndexPage> {
 
   @override
   Widget build(BuildContext context) {
+    var index = Provider.of<NavIndexNotifier>(context).index;
+    print('$index');
     initData();
+
+    var bar = BottomNavigationBar(
+      onTap: handleTabChange,
+      currentIndex: _tabIndex,
+      type: BottomNavigationBarType.fixed,
+      items: tabImages.map((item) {
+        return BottomNavigationBarItem(
+            title: new Text(item.title,
+                style: TextStyle(color: Style.mainTextColor)),
+            icon: Image.asset(tabImages.indexOf(item) != _tabIndex
+                ? item.icon
+                : item.selectedIcon));
+      }).toList(),
+    );
+
     return Scaffold(
       body: _pageList[_tabIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: handleTabChange,
-        type: BottomNavigationBarType.fixed,
-        items: tabImages.map((item) {
-          return BottomNavigationBarItem(
-              title: new Text(item.title,
-                  style: TextStyle(color: Style.mainTextColor)),
-              icon: Image.asset(tabImages.indexOf(item) != _tabIndex
-                  ? item.icon
-                  : item.selectedIcon));
-        }).toList(),
+      bottomNavigationBar: Consumer<NavIndexNotifier>(
+        builder: (context, navIndex, child) {
+          _tabIndex = index;
+          return bar;
+        },
       ),
     );
   }

@@ -3,6 +3,13 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+class TimeSpace {
+  TimeSpace(this.startTime, this.endTime);
+
+  String startTime;
+  String endTime;
+}
+
 class SearchPage extends StatefulWidget {
   @override
   BillListPageState createState() => BillListPageState();
@@ -34,7 +41,7 @@ class BillListPageState extends State<SearchPage> {
             iconTheme: IconThemeData(color: Color(0xffffffff)),
             leading: IconButton(
               icon: new Icon(Icons.arrow_back, color: Colors.black),
-              onPressed: () => Navigator.pop(context, false),
+              onPressed: () => Navigator.pop(context),
             )),
         body: Container(
           color: Color.fromARGB(255, 255, 255, 255),
@@ -168,6 +175,23 @@ class BillListPageState extends State<SearchPage> {
                 flex: 1,
                 child: Container(
                   color: Color.fromARGB(100, 233, 233, 233),
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(25),
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints.expand(height: 55.0),
+                        child: RaisedButton(
+                          color: Theme.of(context).primaryColor,
+                          onPressed: () {
+                            Navigator.of(context, rootNavigator: true)
+                                .pop(TimeSpace(startTime, endTime));
+                          },
+                          textColor: Colors.white,
+                          child: Text("确定"),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               )
             ],
@@ -176,17 +200,17 @@ class BillListPageState extends State<SearchPage> {
   }
 
   _calc(int day) {
-    startTime = _update(day);
-    endTime = _update(0);
+    startTime = updateTime(day - 1);
+    endTime = updateTime(-1);
     setState(() {
       _day = day;
     });
   }
 
-  String _update(int day) {
+  String updateTime(int day) {
     DateTime now = DateTime.now().toLocal();
     DateTime start = now.subtract(Duration(days: day));
     DateTime startTrue = DateTime(start.year, start.month, start.day, 0, 0, 0);
-    return "${formatter.format(DateTime.fromMillisecondsSinceEpoch(startTrue.millisecondsSinceEpoch, isUtc: false))}";
+    return "${DateFormat('yyyy-MM-dd HH:mm:ss').format(startTrue)}";
   }
 }

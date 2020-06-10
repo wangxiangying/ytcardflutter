@@ -1,9 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
+class  MyToast {
+  void show(text) {
+    Fluttertoast.showToast(
+        msg: text,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
+}
 
 class MyDialog {
   static dynamic ctx;
 
-  void alert(text ,clickOk) {
+  void alert(text, clickOk) {
     // 请求前显示弹窗
     showDialog(
         context: ctx,
@@ -65,7 +79,6 @@ class MyDialog {
                               child: Text('取消'),
                               onPressed: () {
                                 complete();
-
                               },
                             ),
                           ),

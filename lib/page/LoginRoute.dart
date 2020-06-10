@@ -118,8 +118,8 @@ class _LoginRouteState extends State<LoginRoute> {
     if ((_formKey.currentState as FormState).validate()) {
       LoginModel user;
       try {
-        user = await IndexService.login(
-            _unameController.text, _pwdController.text);
+        user =
+            await NetService.login(_unameController.text, _pwdController.text);
       } catch (e) {
         //登录失败则提示
       } finally {
@@ -127,9 +127,11 @@ class _LoginRouteState extends State<LoginRoute> {
 //        Navigator.of(context).pop();
       }
 
-      if (user != null) {
+      if (user.code == 200) {
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) =>   new IndexPage()));
+            .push(MaterialPageRoute(builder: (context) => new IndexPage()));
+      } else {
+        MyToast().show(user.message);
       }
     }
   }

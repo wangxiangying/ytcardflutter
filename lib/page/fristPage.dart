@@ -4,12 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ytcardapp/model/notifier/BillNotifier.dart';
+import 'package:ytcardapp/model/notifier/NavIndexNotifier.dart';
+import 'package:ytcardapp/page/qrcode.dart';
+import 'package:ytcardapp/page/money_for_scan.dart';
 import 'package:ytcardapp/service/service.dart';
-import 'package:ytcardapp/utils/adapt.dart';
 import 'package:ytcardapp/view/CircleProgressBar.dart';
 import 'package:ytcardapp/view/MyIconButton.dart';
 
-import '../theme.dart';
 import 'index.dart';
 
 class HomeRoutePage extends StatefulWidget {
@@ -39,7 +40,7 @@ class HomeRoutePageState extends State<HomeRoutePage>
   }
 
   Future<void> _refresh() async {
-    await IndexService.bill();
+    await NetService.bill();
     setState(() {
       count++;
       progressBarTween = new CircleProgressBarTween(
@@ -85,6 +86,10 @@ class HomeRoutePageState extends State<HomeRoutePage>
                           child: Center(
                               child: MyIconWidget(
                             icons: Image.asset("assets/saoma.png"),
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => new MoneyForScanPage()));
+                            },
                             text: "扫一扫收款",
                           )),
                         ),
@@ -93,6 +98,10 @@ class HomeRoutePageState extends State<HomeRoutePage>
                             child: Center(
                                 child: MyIconWidget(
                               icons: Image.asset("assets/erweima.png"),
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => new QrCodePage()));
+                              },
                               text: "二维码收款",
                             ))),
                       ],
@@ -113,139 +122,148 @@ class HomeRoutePageState extends State<HomeRoutePage>
                   height: 320,
                   width: 340,
                   alignment: Alignment.center,
-                  child: Container(
-                      child: Padding(
-                    padding: const EdgeInsets.all(18.0),
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Expanded(flex: 1, child: Text("今日实收总金额")),
-                            Image.asset("assets/jiantou.png",
-                                width: 7, height: 10),
-                          ],
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Stack(
-                            children: [
-                              Center(
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0, 60, 0, 0),
-                                  child: new CustomPaint(
-                                    size: const Size(150.0, 150.0),
-                                    painter: new CircleProgressBarPainter(
-                                        progressBarTween
-                                            .animate(animationController)),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 80, 0, 0),
-                                child: Center(
-                                  child: Column(
-                                    children: <Widget>[
-                                      Text("总金额"),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                            "${billNotifier?.data?.bill?.amount}"),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              )
+                  child: InkWell(
+                    onTap: () => {
+                      Provider.of<NavIndexNotifier>(context, listen: false)
+                          .setIndex(1)
+                    },
+                    child: Container(
+                        child: Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Expanded(flex: 1, child: Text("今日实收总金额")),
+                              Image.asset("assets/jiantou.png",
+                                  width: 7, height: 10),
                             ],
                           ),
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Expanded(
-                              flex: 1,
-                              child: Column(
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.all(6.0),
-                                    child: Text(
-                                        "${billNotifier?.data?.bill?.orderCount}"),
+                          Expanded(
+                            flex: 1,
+                            child: Stack(
+                              children: [
+                                Center(
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(0, 60, 0, 0),
+                                    child: new CustomPaint(
+                                      size: const Size(150.0, 150.0),
+                                      painter: new CircleProgressBarPainter(
+                                          progressBarTween
+                                              .animate(animationController)),
+                                    ),
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Image.asset(
-                                          "assets/hongdian.png",
-                                          width: 20,
-                                          height: 20,
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 80, 0, 0),
+                                  child: Center(
+                                    child: Column(
+                                      children: <Widget>[
+                                        Text("总金额"),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                              "${billNotifier?.data?.bill?.amount}"),
                                         ),
-                                      ),
-                                      Text(
-                                        "收款 (笔)",
-                                        style:
-                                            TextStyle(color: Color(0x66666666)),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Column(
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.all(6.0),
-                                    child: Text(
-                                        "${billNotifier?.data?.bill?.refundCount}"),
+                                      ],
+                                    ),
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Image.asset(
-                                          "assets/landian.png",
-                                          width: 20,
-                                          height: 20,
-                                        ),
-                                      ),
-                                      Text(
-                                        "退款 (笔)",
-                                        style:
-                                            TextStyle(color: Color(0x66666666)),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
+                                )
+                              ],
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ))),
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                flex: 1,
+                                child: Column(
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.all(6.0),
+                                      child: Text(
+                                          "${billNotifier?.data?.bill?.orderCount}"),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Image.asset(
+                                            "assets/hongdian.png",
+                                            width: 20,
+                                            height: 20,
+                                          ),
+                                        ),
+                                        Text(
+                                          "收款 (笔)",
+                                          style: TextStyle(
+                                              color: Color(0x66666666)),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Column(
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.all(6.0),
+                                      child: Text(
+                                          "${billNotifier?.data?.bill?.refundCount}"),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Image.asset(
+                                            "assets/landian.png",
+                                            width: 20,
+                                            height: 20,
+                                          ),
+                                        ),
+                                        Text(
+                                          "退款 (笔)",
+                                          style: TextStyle(
+                                              color: Color(0x66666666)),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )),
+                  )),
             ],
           ),
         ),
       ],
     );
 
-    return new Scaffold(
-        body: new Column(children: <Widget>[
-      new Container(
-          height: Adapt.padTopH() + Adapt.px(90),
-          decoration: new BoxDecoration(
-              gradient: new LinearGradient(
-                  colors: [Style.mainColor, Style.mainLightColor])),
-          child: new HomeIndexPage()),
-//      new Expanded(
-//          child: new TabBarView(
-//        children: categoryPageList,
-//        controller: mController,
-//      )),
-//          new HomeIndexPage()
-    ], mainAxisSize: MainAxisSize.min));
+//     return new Scaffold(
+//         body: new Column(children: <Widget>[
+//       new Container(
+//           height: Adapt.padTopH() + Adapt.px(90),
+//           decoration: new BoxDecoration(
+//               gradient: new LinearGradient(
+//                   colors: [Style.mainColor, Style.mainLightColor])),
+//           child: new HomeIndexPage()),
+    //      new Expanded(
+    //          child: new TabBarView(
+    //        children: categoryPageList,
+    //        controller: mController,
+    //      )),
+    //          new HomeIndexPage()
+//     ], mainAxisSize: MainAxisSize.min));
   }
 }

@@ -18,9 +18,16 @@ class BillListPage extends StatefulWidget {
 }
 
 class BillListPageState extends State<BillListPage> {
-  String startTime = "2010-11-12 00:00:00";
-  String endTime = "2020-11-22 00:00:00";
-  var formatter = new DateFormat('yyyy-MM-dd hh:mm:ss');
+  static var formatter = new DateFormat('yyyy-MM-dd HH:mm:ss');
+
+  static var c = DateTime.now();
+  static var startDataTime = DateTime(c.year, c.month, c.day, 0, 0, 0);
+
+  static var d = c.add(Duration(days: 1));
+  static var endDataTime = DateTime(d.year, d.month, d.day, 0, 0, 0);
+
+  String startTime = formatter.format(startDataTime);
+  String endTime = formatter.format(endDataTime);
 
   int pageNo = 1;
   int pageSize = 10;
@@ -71,7 +78,7 @@ class BillListPageState extends State<BillListPage> {
 
   Future<List<TransactionList>> _search() async {
     billListNotifier =
-        await IndexService.getBillList(startTime, endTime, pageNo, pageSize);
+        await NetService.getBillList(startTime, endTime, pageNo, pageSize);
     billListModel = billListNotifier.data as BillListModel;
     var tempList = billListModel.data.transactionList;
     count = billListModel.data.count;
@@ -88,9 +95,13 @@ class BillListPageState extends State<BillListPage> {
   }
 
   _navigateAndDisplaySelection(BuildContext context) async {
-    final result = await Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => new SearchPage()),
-    );
+    TimeSpace result = await Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => new SearchPage()));
+    if (result != null) {
+      startTime = result.startTime;
+      endTime = result.endTime;
+      _refresh();
+    }
   }
 
   @override

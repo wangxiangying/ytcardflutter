@@ -6,9 +6,9 @@ import '../theme.dart';
 class MyIconWidget extends StatefulWidget {
   final Widget icons;
   final String text;
-  final Function fun;
+  final Function onTap;
 
-  MyIconWidget( {this.icons, this.text,this.fun, Key key}) : super(key: key);
+  MyIconWidget( {this.icons, this.text,this.onTap, Key key}) : super(key: key);
 
   @override
   _MyIconWidgetState createState() => _MyIconWidgetState(this);
@@ -26,7 +26,7 @@ class _MyIconWidgetState extends State<MyIconWidget> {
         IconButton(
           icon: weights.icons,
           iconSize: 46,
-          onPressed: weights.fun,
+          onPressed: weights.onTap,
         ),
         Text(weights.text,
         style: TextStyle(color: Style.appColor)
